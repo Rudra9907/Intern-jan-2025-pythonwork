@@ -1,0 +1,96 @@
+#signup page                                                                     
+def signup():
+  print("welcome to signup.")
+  time.sleep(0.5)
+  id_exist=1
+  pin_accept=2
+  print("please enter a unique user name to continue.")
+
+  while id_exist==1:
+    id=input("enter ID:\n").strip().lower().replace(" ","")
+    id_exist=customers.signup_id_check(id)
+    if id_exist == 1:
+      print("ID already taken try a diffrent id")
+      continue
+    else:
+      break
+
+  fullname=input("please enter your full name:\n").strip()
+  password=input("please enter a passwordk\n").strip()
+
+  pin = pin_generator()
+  card=card_generator()
+  print(f"your pin is {pin}")
+  print(f"your card is {card}")
+  print("remember you pin and last 4 digits of card")
+  bank=bank_selector()
+  if bank == "null":
+    print(" cannot have no bank.")
+    return
+  balance=0
+  users[id]=customers(fullname,id,password,pin,card,bank,balance)
+  # print(users[id].fullname)
+  # print(users[id].id)
+  # print(users[id].password)
+  # print(users[id].pin)
+  # print(users[id].bank)
+  # print(users[id].balance)
+# signup()
+
+
+
+##   pin setter ###############
+def pin_change():
+  while True:
+    try:
+      pin=int(input("enter a four digit pin:\n"))
+    except:
+      print("enter a 4 digit number")
+      continue
+    try:
+      pin2=int(input("enter the same pin:\n"))
+    except:
+      print("enter a 4 digit number")
+      continue
+    if pin != pin2:
+      print("both pins don't match")
+      continue
+    pin_accept=users[online_user].signup_pin_check(pin)
+    if pin_accept==2:
+      print("more or less than 4 digits.")
+      continue
+    elif pin_accept==1:
+      break
+  return pin
+
+
+### card checker#############
+def card_checker():
+  attempts = 3
+  while True:
+    print("Enter the last 4 digits of your card")
+    try:
+      card=int(input())
+    except:
+      print("not a number")
+      continue
+    if attempts != 0:
+      card_accept=users[online_user].card_check(card)
+      if card_accept == "non_4":
+        print("entred is not a 4 digit number")
+      elif card_accept == "card_match":
+        print("card Accepted")
+        break
+      elif card_accept == "not_matched":
+        print("wrong card try again")
+        attempts -= 1
+      else:
+        print("error")
+        break
+    elif attempts == 0:
+      print("too many invalid attemts")
+      return "invalid"
+
+
+
+# card_checker()
