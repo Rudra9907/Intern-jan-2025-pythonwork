@@ -1,0 +1,58 @@
+##deposit
+
+def deposit():
+  x=pin_checker()
+  if x== "failed":
+    return
+  y = card_checker()
+  if y== "invalid":
+    return
+  while True:
+    print("if you want to deposit in other bank go to cross banking.")
+    print(f"your current account is registred with {banks[users[online_user].bank]}")
+    print("enter amount to deposit: ")
+    try:
+      temp=int(input())
+    except:
+      print("not a number")
+      continue
+    time.sleep(0.5)
+    time.sleep(1)
+    x=users[online_user].deposit_check(temp)
+    if x== "too_low":
+      print("you cannot submit less than 500 rupees")
+      continue
+    elif x== "too_high":
+      print("to deposit more than 80k rupees visit your nearest bank")
+      continue
+    elif x== "Negetive_val":
+      print("entered amount is negetive.")
+      continue
+    elif x== "zero":
+      print("entered amount is zero")
+      continue
+    elif x== "success":
+      print(f"{temp} has been added to your account.")
+      return "success"
+
+
+#pinchecker
+def pin_checker():
+  attempts=3
+  while attempts>0:
+    print("enter your pin")
+    try:
+      pin=int(input())
+    except:
+      print("not a number.")
+      continue
+    x = users[online_user].pin_check(pin)
+    if x == "incorrect_pin":
+      print("incorrect pin try again")
+      attempts -= 1
+      continue
+    elif x== "correct_pin":
+      print("pin accepted.")
+      break
+  if attempts == 0:
+    return "failed"
