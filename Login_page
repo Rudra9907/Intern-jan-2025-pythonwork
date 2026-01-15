@@ -1,0 +1,57 @@
+import random
+##random pin generator#######################
+def pin_generator():
+  pin=random.randint(1000,9999)
+  return pin
+
+##random card generator########################
+def card_generator():
+  cardnum=random.randint(1000000000000000, 9999999999999999)
+  return cardnum
+
+
+#Login_page
+
+def Login_page():
+  attempts=3
+
+  print("welcome enter Id and Password to continue\n")
+
+  while attempts>0: # def guard():
+    print("ID:")
+    inp_ID=input().lower().strip().replace(" ","")
+    if inp_ID in users:
+      pass
+    else:
+      print("no id detected")
+      continue
+    print("Pass: ")
+    inp_pass=input().strip()
+    if inp_pass in users[inp_ID].password:
+      print(f"welcome {users[inp_ID].fullname}")
+      global online_user
+      online_user=inp_ID
+      time.sleep(1)
+      return "login_success"
+      break
+    else :
+      print("incorrect password.")
+      attempts -= 1
+  # while attempts>0:
+  #   inp_ID, inp_pass = guard()
+  #   if inp_ID==temp_id and inp_pass==temp_pass:
+  #     print("welcome. logging you in")
+  #     time.sleep(1)
+  #     home_page()
+  #     break
+  #   else:
+  #     attempts -= 1
+  #     if inp_ID!=temp_id and inp_pass!=temp_pass:
+  #       print("incorrect id and password try again.")
+  #     elif inp_pass!=temp_pass:
+  #       print("passwords dont match.")
+  if attempts == 0:
+    return False
+  else:
+    return
+#Login_page()
