@@ -1,0 +1,254 @@
+########### Admin panel#############################
+def admin_panel():
+  print("============Admin============")
+  print("1. Refill Atms\n2. See all users\n3. Edit registred banks\n4. edit atms\n5. edit user info\n6. Back")
+  print("=============================")
+  ch=input()
+  match (ch):
+    case "1":
+      refill_atms()
+    case "2":
+      see_all_users()
+    case "3":
+      edit_registred_banks()
+    case "4":
+      edit_atms()
+    case "5":
+      edit_users()
+    case "6":
+      return "exitted"
+    case _:
+      print("choose 1 2 3 or 4")
+
+#########refill atms###################
+def refill_atms():
+  while True:
+    chosen_atm = atm_selector()
+    print(f"you've selected {chosen_atm} enter the amount to refill")
+    try:
+      amount=int(input())
+    except:
+      print("not a number")
+      continue
+    x=atms[chosen_atm].cash_refill(amount)
+    if x == "zero":
+      print("cannot refill under 500")
+    elif x == "negetive_val":
+      print("cannot have negetive terms")
+    elif x == "too_much":
+      print("cannot give more than 2 lakh at once")
+    else:
+      print(f"added {amount} to {chosen_atm}")
+      print(f"cureent cash in {chosen_atm} is {atms[chosen_atm].cash}")
+      return "success"
+
+
+####see all users#######################
+def see_all_users():
+  for key in users:
+      print(f"{key} = [id:{users[key].id} ; fullname:{users[key].fullname} ; password:{users[key].password} ; pin:{users[key].pin} ; card:{users[key].card} ; bank:{banks[users[key].bank]} ; balance:{users[key].balance}]")
+
+# see_all_users()
+
+## edit registred banks ####################
+
+def edit_registred_banks():
+
+  while True:
+    for i in banks:
+      print(f"{i+1}. {banks[i]}")
+    try :
+      bank_id=int(input("enter bank number to edit: "))
+    except:
+      print("not a number")
+    if bank_id in banks:
+      bank_id -= 1
+      print(f"you have selected {banks[bank_id]}")
+      new_id=input("enter a new ID of the bank: ").strip().replace(" ","").lower()
+      if new_id in banks:
+        print("this id already exists")
+        continue
+      elif new_id == "":
+        print("cant have null value as ID")
+        continue
+      else:
+        print(f"{new_id} has been changed from {banks[bank_id]}")
+        x=input("to cancel this action press x, to confirm press anything")
+        if x=="x":
+          return "cancelled"
+        else:
+          banks[bank_id]=new_id
+          break
+    else:
+      print(f"choose between 1 to {i+1}")
+
+# edit_registred_banks()
+
+#####view all atms #########################
+
+def edit_atms():
+  print("press 1 to edit atm names\npress 2 to add atms\npress 3 to delete atms")
+  editop=input()
+  if editop == "1":
+    while True:
+      chosen_atm=atm_selector()
+      print(f"you have selected {chosen_atm}")
+      new_id=input("enter a new ID of the ATM: ").strip().replace(" ","").lower()
+      if new_id in atms:
+        print("this id already exists")
+        continue
+      elif new_id == "":
+        print("cant have null value as ID")
+        continue
+      else:
+        print(f"{new_id} has been changed from {chosen_atm}")
+        x=input("to cancel this action press x, to confirm press anything")
+        if x=="x":
+          return "cancelled"
+        else:
+          atms[new_id] = atms.pop(chosen_atm)
+          return "done"
+  elif editop == "2":
+    while True:
+      new_id = input("Enter new ATM ID: ").strip().replace(" ", "").lower()
+      if new_id == "":
+        print("ID cannot be empty.")
+        continue
+      elif new_id in atms:
+        print("ATM already exists.")
+        continue
+      try:
+        starting_cash = int(input("Enter starting cash: "))
+      except:
+        print("Enter a number.")
+        continue
+
+      if starting_cash < 0:
+        print("Starting cash cannot be negative.")
+        continue
+
+      atms[new_id] = machines(new_id, starting_cash)
+      print(f"ATM {new_id} created with {starting_cash} as starting cash")
+      return
+  elif editop == "3":
+    while True:
+      chosen_atm = atm_selector()
+      print(f"You are deleting {chosen_atm}")
+      confirm = input("Press X to cancel, anything else to confirm: ").lower()
+      if confirm == "x":
+          return "cancelled"
+      try:
+        del chosen_atm
+      except:
+        print("something went wrong")
+      return
+
+
+
+#### edit users ##################################
+def edit_users():
+    while True:
+        user_keys = list(users.keys())
+
+        print("=================users==================")
+        for i, key in enumerate(user_keys, start=1):
+            print(f"{i}. {key}")
+        print("========================================")
+
+        try:
+            selected_user = int(input("select a user to edit: "))
+        except:
+            print("not a number")
+            continue
+        if 1 <= selected_user <= i:
+          pass
+        else:
+          print("invalid selection try again")
+          continue
+        selected_key = user_keys[selected_user - 1]
+        user = users[selected_key]
+        print(f"you have selected {selected_key}")
+        # print("if you want to change the ID press 1, if you want to change some other value press 2")
+        # inp = input()
+        # if inp == "1":
+        #     new_id = input("enter a new ID of the user: ").strip().replace(" ", "").lower()
+        #     if new_id == "":
+        #         print("cant have null value as ID")
+        #         continue
+        #     if new_id in users:
+        #         print("this id already exists")
+        #         continue
+        #     x = input("to cancel this action press x, to confirm press anything: ")
+        #     if x == "x":
+        #         print("cancelled")
+        #         continue
+        #     users[selected_key] = users.pop(selected_key)
+        #     users[new_id].id = new_id
+        #     print("ID updated successfully")
+        #     break
+        # elif inp == "2":
+        while True:
+          print(f"what do you want to chnage")
+          print("=========================================")
+          print(f"{selected_key}")
+          print("")
+          print(f"1. fullname:{users[selected_key].fullname}")
+          print(f"2. password:{users[selected_key].password}")
+          print(f"3. pin:{users[selected_key].pin}")
+          print(f"4. card:{users[selected_key].card}")
+          print(f"5. bank:{banks[users[selected_key].bank]}")
+          print("6. Back")
+          print("==========================================")
+          op = input("choose: ")
+          match op:
+            case "1":
+                new_full = input("enter new fullname: ").strip()
+                if new_full == "":
+                    print("no null value allowed")
+                    continue
+                user.fullname = new_full
+                print("fullname updated")
+                return "done_full"
+            case "2":
+                new_pass = input("enter new password: ").strip()
+                if new_pass == "":
+                    print("no null value allowed")
+                    continue
+                user.password = new_pass
+                print("password updated")
+                return "done_pass"
+            case "3":
+                try:
+                    new_pin = int(input("enter new pin: "))
+                except:
+                    print("not a number")
+                    continue
+                if len(str(new_pin)) != 4:
+                    print("pin must be 4 digits")
+                    continue
+                user.pin = new_pin
+                print("pin updated")
+                return "done_pin"
+            case "4":
+                try:
+                    new_card = int(input("enter new card number: "))
+                except:
+                    print("not a number")
+                    continue
+                if len(str(new_card)) != 16:
+                    print("card must be 16 digits")
+                    continue
+                user.card = new_card
+                print("card updated")
+                return "done_card"
+            case "5":
+                bank = bank_selector()
+                user.bank = bank
+                print("bank updated")
+                return "done_bank"
+            case "6":
+                break
+            case _:
+                print("not valid input")
+  # refill_atms()
+# all_atms()
