@@ -1,0 +1,76 @@
+# bootup_page
+import time
+
+## globalsgg
+online_user= None
+W_limit=3
+D_limit=10
+selected_atm= None
+admin = False
+
+def atm_selector():
+    global admin
+    while True:
+      atm_keys = sorted(atms.keys())
+      print("==============================")
+      for i, key in enumerate(atm_keys, start=1):
+          print(f"{i}. {key}")\
+      print("===============================")
+      atm_choice = input()
+
+      if atm_choice == "admin":
+          if not admin:
+              print("pass:")
+              admin_pass = input("to exit press x: ")
+              if admin_pass == "asdf@1234":
+                  print("giving privilage.")
+                  admin = True
+              elif admin_pass == "x":
+                  continue
+              else:
+                  print("invalid password")
+          else:
+              print("already in admin mode")
+          continue
+      if not atm_choice.isdigit():
+          print("choose a number")
+          continue
+
+      atm_choice = int(atm_choice)
+
+      if not 1 <= atm_choice <= len(atm_keys):
+          print("invalid ATM number")
+          continue
+      return atm_keys[atm_choice-1]
+
+
+selected_atm=atm_selector()
+print("welcome to ATM")
+while True:
+  print("would you like to login or signup.")
+  print("==================ATM==================")
+  print("1. login\n2. Signup\n3. Quit")
+  print("=======================================")
+  try:
+    acc_choice=int(input())
+  except:
+    print("enter a number.")
+    continue
+  match(acc_choice):
+    case 1:
+      print("please wait.")
+      time.sleep(2)
+      checker=Login_page()
+      if checker == False:
+        print("too many incorrect attempts. try again")
+        break
+      elif checker == "login_success":
+        home_page()
+    case 2:
+      print("please wait.")
+      time.sleep(2)
+      signup()
+    case 3:
+      break
+    case _:
+      print("Enter 1 for login and 2 for signup")
