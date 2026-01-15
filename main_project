@@ -1,1 +1,18 @@
+Create an ATM machine - User should be able get money out of it - User should be able to deposite money into it - You must ask card number and pin before any transaction - User can get overall information about his bank account - There should be a limit in one time transaction and total transaction in a day (Consider day as from starting of script to exit) - Limit on number of transaction - Let user choose the bank of ATM - Every ATM will have some initial balance - Every user has it's own bank - If user takes money from an ATM other than his bank take 5% cut in withdrawl amount Nice to have features: - Insert, update and delete users (Generate card number and PIN randomly) - Insert, update and delete ATMs - Insert, update and delete banks - Insert money into ATM (No database is needed for this it can be managed using dicts) Hint: You can manage all this with data dictionary data type.
+
+Important Ponits:
+
+make a login page id and password
+let the bank already be initialised (if the use wants to they can switch it)
+user deatiles key: [name], values as "id" "acc. num" "pin" "login_pass" "balance" "user_card" "bank_registered" (use nested dictionary)
+ask the user which bank they want to use. if registred != chosen give a 5% cut
+make sure the programme runs and never crashes the programme should not end it must only be exited by the user
+make 5-6 diffrent object classes "cardnum" "pin" "amounttrue"
+Idea dump:
+
+create an option to make admin ids which will be able to edit stuff
+
+when new user signs up let them choose a bank in case menu
+
+ERRors 1. 2. 3. when depositing it need to ask for pin 4. improve deposit UI it should ask for permission before depositing (we mention that you need to go to cross bank if you need to deposit on other account)
 
