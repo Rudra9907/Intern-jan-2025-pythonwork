@@ -1,0 +1,154 @@
+#users declaration
+
+class customers:
+  def __init__(self, fullname,id, password, pin, card, bank, balance):
+    self.fullname=fullname
+    self.id=id
+    self.password=password
+    self.pin= pin
+    self.card=card
+    self.bank= bank
+    self.balance= balance
+    self.withdraw_limit= 3
+
+  def signup_pin_check(self, pin):
+    length=len(str(pin))
+    if length != 4:
+      return 2
+    else:
+      self.pin = pin
+      return 1
+
+  def signup_id_check(id):
+    if id in users:
+      return 1
+    else:
+      return 0
+
+  def pin_check(self, abc):
+    if self.pin == abc:
+     return "correct_pin"
+    else:
+      return "incorrect_pin"
+
+  def card_check(self, no):
+    length = len(str(no))
+    if length != 4:
+      return "non_4"
+    elif no == self.card % 10000:
+      return "card_match"
+    else :
+      return "not_matched"
+
+  def bank_validator(self, abc):
+    if abc == self.bank:
+      return "same_bank"
+    elif abc == "null":
+      return "null_val"
+    else:
+      self.bank = abc
+      return "success"
+
+  def withdraw_limit_check(self):
+    if self.withdraw_limit !=0:
+      return "can_withdraw"
+    else:
+      return "max_withdraw"
+
+  def withdraw_limiter(self):
+    self.withdraw_limit -= 1
+
+  def withdraw_sameBank(self,amount):
+    if amount < 0:
+      return "negative_value"
+    elif amount > self.balance:
+      return "insufficient_bal"
+    else :
+      self.balance -= amount
+
+      return "success"
+
+  def withdraw_diffBank(self,amount):
+    if amount < 0:
+      return "negative_value"
+    elif amount > self.balance:
+      return "insufficient_bal"
+    elif amount+(amount*0.05) > self.balance:
+      return "insuff_tax"
+    else :
+      self.balance -= (amount+(amount*0.05))
+      return "success"
+
+  def deposit_check(self,dep):
+    if dep < 500:
+      return "too_low"
+    elif dep >80000:
+      return "too_high"
+    elif dep < 0:
+      return "Negetive_val"
+    elif dep == 0:
+      return "zero"
+    else:
+      self.balance += dep
+      return "success"
+
+def deposit_checkCB(self,dep):
+    if dep < 500:
+      return "too_low"
+    elif dep >80000:
+      return "too_high"
+    elif dep < 0:
+      return "Negetive_val"
+    elif dep == 0:
+      return "zero"
+    else:
+      self.balance += dep-(dep*0.05)
+      return "success"
+
+
+class machines:
+  def __init__(self,m_id,cash):
+    self.m_id= m_id
+    self.cash = cash
+
+  def cash_check(self, amount):
+    if amount > self.cash:
+      return "low_cash"
+    elif amount <= self.cash:
+      self.cash -= amount
+      return "success"
+
+  def cash_refill(self, amount):
+    if amount<0:
+      return "negetive_val"
+    elif amount>200000:
+      return "too_much"
+    elif amount < 500:
+      return "zero"
+    else:
+      self.cash += amount
+      return "success"
+
+users={
+    "rudra":customers("Rudrapratap Singh Chauhan", "rudra", "qwertyuiop", 1234, 1987654321123456, 2 , 10000),
+    # "akshay":customers("Akshay Bhajeta")
+}
+
+atms={
+    "atm1":machines("atm1", 1000000000),
+    "atm2":machines("atm2", 10000),
+    "atm3":machines("atm3", 10),
+    "atm4":machines("atm4", 100000),
+    "atm5":machines("atm5", 1000)
+}
+
+banks={0:"hdfc",
+       1:"icici",
+       2:"pnb",
+       3:"kotak",
+       4:"induslnd",
+       5:"sbi",
+       6:"axis"}
+
+banks[1]
+# users["rudra"].card_check(1456)
