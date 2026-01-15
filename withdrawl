@@ -1,0 +1,136 @@
+##withdraw
+def withdrawl():
+  a= users[online_user].withdraw_limit_check()
+  if a== "can_withdraw":
+    pass
+  elif a == "max_withdraw":
+    return "max_withdrawls"
+  print(f"Mr. {users[online_user].fullname} your currently registered bank is {banks[users[online_user].bank]} would you like to switch banks?")
+  while True:
+    choice=input("y/n : ")
+    match (choice):
+      case "y" | "Y":
+        while True:
+          bank=bank_selector()
+          if users[online_user].bank == bank:
+            print("this bank is the same one as registred in your account. choose a new one.")
+          else:
+            diff_bank()
+            return
+
+      case "n" | "N":
+        same_bank()
+        return
+
+
+      #   while True:
+      #     print("which bank would you like to choose.")
+      #     bank= bank_selector()
+      #     if bank == users[online_user].bank:
+      #       print("this bank is already registred to your account would you like to proceed with the same bank?")
+      #       chose=input(f"Note: 5% cut will be relinquished if you choose {users[online_user].bank}\ny or n : ")
+      #       match (chose):
+      #         case "y" | "Y" :
+      #           same_bank()
+      #           # while True:
+      #             # try:
+      #                amount=int(input("enter the amount to withdraw"))
+      #             except:
+      #               print("enter a valid number amount.")
+      #               continue
+      #             temp=users[online_user].withdraw_sameBank(amount)
+      #             if temp == "negative_value":
+      #               print("you cannot enter negative value.")
+      #               continue
+      #             elif temp == "insufficient_bal":
+      #               print("not sufficient balance")
+      #               continue
+      #             else:
+      #               print(f"{amount} has been successfully transacted.\n remaining amount is {users[online_user].balance}")
+      #               W_limit -= 1
+      #               return "success_transac"
+      #         case "n" | "N" :
+      #           continue
+      #         case _:
+      #           print("y or n")
+      #     elif bank != users[online_user].bank:
+
+      #       users[online_user].withdraw_diffBank(200)
+      #       return
+
+      # case "n" | "N":
+      #   print("please enter the amount to withdraw: ")
+      #   users[online_user].withdraw_sameBank(200)
+      #   break
+
+      # case _:
+      #   print("either y or n")
+
+
+  if W_limit == 0:
+    print("reached withdrawl limit for today.")
+
+#withdraw same bnak
+def same_bank():
+    x=pin_checker()
+    if x== "failed":
+      return
+    y = card_checker()
+    if y== "invalid":
+      return
+    while True:
+      try:
+        amount=int(input("enter amount to withdraw: "))
+      except:
+        print("not a number.")
+        continue
+      y=atms[selected_atm].cash_check(amount)
+      if y== "low_cash":
+        print("atm does not have enough amount as you requested. please enter a low ammount.")
+        print(f"Atm balance: {atms[selected_atm].cash}")
+        continue
+      x=users[online_user].withdraw_sameBank(amount)
+      if x == "negative_value":
+        print("the amount cannot be in negative")
+      elif x== "insufficient_bal":
+        print("insufficient balanace")
+      else:
+        print(f"{amount} has been successfully transacted.\nremaining amount is {users[online_user].balance}")
+        users[online_user].withdraw_limiter()
+        return "success_transac"
+
+def diff_bank():
+    x=pin_checker()
+    if x== "failed":
+      return
+    y = card_checker()
+    if y== "invalid":
+      return
+    while True:
+      try:
+        amount=int(input("enter amount to withdraw: "))
+      except:
+        print("not a number.")
+        continue
+      y=atms[selected_atm].cash_check(amount)
+      if y== "low_cash":
+        print("atm does not have enough amount as you requested. please enter a low ammount.")
+        print(f"Atm balance: {atms[selected_atm].cash}")
+        continue
+      x=users[online_user].withdraw_diffBank(amount)
+      if x == "negative_value":
+        print("the amount cannot be in negative")
+      elif x== "insufficient_bal":
+        print("insufficient balanace")
+      elif x== "insuff_tax":
+        print("not enough balance to pay 5% tax")
+      elif y== "low_cash":
+        print("atm does not have enough amount as you requested. please enter a low ammount.")
+        print(f"Atm balance: {atms[selected_atm].cash}")
+      else:
+        print(f"{amount} has been successfully transacted.\nremaining amount is {users[online_user].balance}")
+        users[online_user].withdraw_limiter()
+        return "success_transac"
+
+
+# same_bank()
