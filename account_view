@@ -1,0 +1,37 @@
+##account##
+def account():
+  while True:
+    print(f"welcome {users[online_user].fullname}")
+    time.sleep(1)
+    print("===============Profile================")
+    print(f"Full Name  : {users[online_user].fullname}")
+    print(f"ID         : {users[online_user].id}")
+    print(f"Card Number: {users[online_user].card}")
+    print(f"Bank       : {banks[users[online_user].bank]}")
+    print("")
+    print("To change pin press 1") #pin chnage is in signup cell
+    print("To chnage Bank press 2")
+    print("======================================")
+    print("\nto go back press anything")
+    x = input()
+    if x == "1":
+      pin= pin_change()
+      print("pin changed successfully.")
+      continue
+    elif x == "2":
+      while True:
+        print("choose a new bank")
+        bank=bank_selector()
+        x = users[online_user].bank_validator(bank)
+        if x == "same_bank":
+          print("the selected bank was the same as the previous")
+          continue
+        elif x == "null_val":
+          break
+        elif x== "success":
+          print("your bank has been changed")
+          break
+        else:
+          pass
+    else:
+      break
