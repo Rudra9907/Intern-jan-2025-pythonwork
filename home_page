@@ -1,0 +1,46 @@
+
+#home page
+def home_page():
+  global online_user
+  global admin
+  while True:
+    print("===============================================")
+    print("1. Withdraw.")
+    print("2. Deposit")
+    print("3. check balance")
+    print("4. Cross Banking")
+    print("5. About account")
+    print("6. Logout")
+    if admin == True:
+      print("7. Admin Panel")
+    print("================================================")
+
+    try:
+      choice=int(input("Enter your choice: "))
+    except:
+      print("choose a number")
+      continue
+    match(choice):
+      case 1:
+        withdrawl()
+      case 2:
+        deposit()
+      case 3:
+        check_balance()
+      case 4:
+        cross_banking()
+      case 5:
+        account()
+      case 6:
+        online_user= None
+        admin = False
+        return "exitted_homepage"
+      case 7:
+        if admin== True:
+          admin_panel()
+        elif admin == False:
+          print("choose the number corrosponding to your choice")
+      case _:
+        print("choose the number corrosponding to your choice")
+
+# home_page()
