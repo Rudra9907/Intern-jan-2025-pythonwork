@@ -1,0 +1,94 @@
+## cross banking
+def cross_banking():
+  while True:
+    print("============Cross banking=============")
+    print("1. withdraw\n2. deposit\n3. Back")
+    print("======================================")
+    choice = input()
+    match choice:
+      case "1":
+        cb_withdraw()
+      case "2":
+        cb_deposit()
+      case "3":
+        return "hollow"
+      case _:
+        print("enter 1 for withdrawl, 2 for deposit and 3 to go back")
+
+
+#########################################################################
+def cb_withdraw():
+  a= users[online_user].withdraw_limit_check()
+  if a== "can_withdraw":
+    pass
+  elif a == "max_withdraw":
+    return "max_withdrawl"
+  while True:
+    print("choosa a bank")
+    bank=bank_selector()
+    if bank == users[online_user].bank:
+      print("you cannot use your own bank.")
+    elif bank == "null":
+      return "null"
+    else:
+      print(f"{banks[bank]} has been selected")
+      break
+  diff_bank()
+
+#########################################################################
+def cb_deposit():
+  while True:
+    print("choosa a bank")
+    bank=bank_selector()
+    if bank == users[online_user].bank:
+      print("you cannot use your own bank.")
+    elif bank == "null":
+      return "null"
+    else:
+      print(f"{banks[bank]} has been selected")
+      break
+  x=pin_checker()
+  if x== "failed":
+    return
+  y = card_checker()
+  if y== "invalid":
+    return
+  while True:
+    print("enter amount to deposit: ")
+    try:
+      temp=int(input())
+    except:
+      print("not a number")
+      continue
+    x=users[online_user].deposit_check(temp)
+    if x== "too_low":
+      print("you cannot submit less than 500 rupees")
+      continue
+    elif x== "too_high":
+      print("to deposit more than 80k rupees visit your nearest bank")
+      continue
+    elif x== "Negetive_val":
+      print("entered amount is negetive.")
+      continue
+    elif x== "zero":
+      print("entered amount is zero")
+      continue
+    elif x== "success":
+      print(f"{temp - (temp*0.05)} has been added to your account")
+      return "success"
+
+
+## check balance
+
+def check_balance():
+  x=pin_checker()
+  if x == "failed":
+    print("try again.")
+    return "failed"
+  else:
+    pass
+  print(f"your current balance is {users[online_user].balance} rupees")
+  return "showed"
+# check_balanc
+
+# cross_banking()
